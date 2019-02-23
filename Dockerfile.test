@@ -1,0 +1,11 @@
+FROM python:3.7-slim
+
+WORKDIR /app
+
+COPY bravado_djang_test_client ./bravado_djang_test_client
+COPY tests ./tests
+COPY test-requirements.txt .
+
+pip install -r test-requirements.txt
+
+CMD ["pytest", "--cov", "bravado_django_test_client", "--cov-fail-under", "100"]
