@@ -48,6 +48,15 @@ definitions:
         items:
           $ref: "#/definitions/Cat"
 
+parameters:
+
+  catName:
+    in: path
+    name: cat_name
+    description: A string cat name
+    required: true
+    type: 'string'
+
 paths:
 
   /:
@@ -71,7 +80,7 @@ paths:
         - 'application/json'
       responses:
         200:
-          description: A forecast object
+          description: A fake get response
           headers:
             Access-Control-Allow-Headers:
               type: 'string'
@@ -81,3 +90,93 @@ paths:
               type: 'string'
           schema:
             $ref: "#/definitions/GetParamsResponse"
+
+  /cats/:
+    post:
+      description: Create a cat
+      operationId: createCat
+      parameters:
+        - in: body
+          required: true
+          name: cat
+          description: cat to create
+          schema:
+            $ref: "#/definitions/Cat"
+      tags:
+        - cats
+      produces:
+        - 'application/json'
+      responses:
+        201:
+          description: A cat object
+          headers:
+            Access-Control-Allow-Headers:
+              type: 'string'
+            Access-Control-Allow-Methods:
+              type: 'string'
+            Access-Control-Allow-Origin:
+              type: 'string'
+          schema:
+            $ref: "#/definitions/Cat"
+
+    get:
+      description: list cats
+      operationId: listCats
+      tags:
+        - cats
+      produces:
+        - 'application/json'
+      responses:
+        201:
+          description: A cat object
+          headers:
+            Access-Control-Allow-Headers:
+              type: 'string'
+            Access-Control-Allow-Methods:
+              type: 'string'
+            Access-Control-Allow-Origin:
+              type: 'string'
+          schema:
+            $ref: "#/definitions/CatList"
+
+  /cats/{cat_name}/:
+    delete:
+      description: Delete a cat
+      operationId: deleteCat
+      parameters:
+        - $ref: "#/parameters/catName"
+      tags:
+        - cats
+      produces:
+        - 'application/json'
+      responses:
+        204:
+          description: Empty response for successful deletion
+          headers:
+            Access-Control-Allow-Headers:
+              type: 'string'
+            Access-Control-Allow-Methods:
+              type: 'string'
+            Access-Control-Allow-Origin:
+              type: 'string'
+
+    put:
+      description: Update an existing cat
+      operationId: updateCat
+      parameters:
+        - $ref: "#/parameters/catName"
+        - in: body
+          required: true
+          name: cat
+          description: cat to update
+          schema:
+            $ref: "#/definitions/Cat"
+      tags:
+        - cats
+      produces:
+        - 'application/json'
+      responses:
+        200:
+          description: A cat object
+          schema:
+            $ref: "#/definitions/Cat"
