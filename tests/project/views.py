@@ -1,5 +1,8 @@
-from django.http import HttpResponse
+from django.http import JsonResponse
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+def get_params_view(request):
+    return JsonResponse({
+        "paramInt": int(request.GET.get('paramInt', None)),
+        "paramString": request.GET.get('paramString', None)
+    })

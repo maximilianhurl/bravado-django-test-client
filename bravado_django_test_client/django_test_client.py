@@ -36,11 +36,13 @@ class DjangoTestResponseAdapter(IncomingResponse):
         return headers
 
     def json(self, **kwargs):
-        return self.django_response.data
+        if hasattr(self.django_response, 'data'):
+            return self.django_response.data
+        return self.django_response.json()
 
     @property
     def data(self):
-        return self.django_response.data
+        return self.json()
 
 
 class DjangoTestFutureAdapter(FutureAdapter):
@@ -57,7 +59,10 @@ class DjangoTestFutureAdapter(FutureAdapter):
         if data:
             data = json.loads(data)
 
-        response = request_method(request["url"], data, **request["headers"])
+        # handle get params
+        params = request.get('params', {})
+
+        response = request_method(request["url"], data or params, **request["headers"])
         return response
 
 

@@ -1,0 +1,83 @@
+
+swagger: '2.0'
+info:
+  version: '0.0.1'
+  title: 'Bravado Test API'
+  description: 'Testing API for bravado'
+
+
+definitions:
+
+  GetParamsResponse:
+    type: 'object'
+    additionalProperties: False
+    properties:
+      paramInt:
+        type: 'integer'
+      paramString:
+        type: 'string'
+        x-nullable: True
+
+  Cat:
+    type: 'object'
+    required:
+      - 'name'
+    additionalProperties: False
+    properties:
+      id:
+        type: 'string'
+      name:
+        type: 'string'
+      color:
+        type: 'string'
+      age:
+        type: 'number'
+      friends:
+        type: 'array'
+        items:
+          $ref: "#/definitions/Cat"
+
+  CatList:
+    type: 'object'
+    properties:
+      count:
+        type: 'number'
+        x-nullable: True
+      results:
+        type: 'array'
+        items:
+          $ref: "#/definitions/Cat"
+
+paths:
+
+  /:
+    get:
+      description: Test endpoitn for get params
+      operationId: GetParamsTest
+      tags:
+        - tests
+      parameters:
+        - in: query
+          name: paramInt
+          type: integer
+          required: true
+          description: A numeric param
+        - in: query
+          name: paramString
+          type: string
+          required: false
+          description: A string param
+      produces:
+        - 'application/json'
+      responses:
+        200:
+          description: A forecast object
+          headers:
+            Access-Control-Allow-Headers:
+              type: 'string'
+            Access-Control-Allow-Methods:
+              type: 'string'
+            Access-Control-Allow-Origin:
+              type: 'string'
+          schema:
+            $ref: "#/definitions/GetParamsResponse"

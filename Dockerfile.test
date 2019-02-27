@@ -8,4 +8,4 @@ COPY test-requirements.txt .
 
 pip install -r test-requirements.txt
 
-CMD ["pytest", "--cov", "bravado_django_test_client", "--cov-fail-under", "100"]
+CMD ["cd", "tests", "&&", "pytest", "--cov", "bravado_django_test_client", "--cov-report", "term"]
