@@ -4,7 +4,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t ${DOCKER_REPOSITORY}:${TRAVIS_COMMIT} -f Dockerfile.test .
+  - docker build -t bravado_django_test_client:${TRAVIS_COMMIT} -f Dockerfile.test .
 
 script:
-   - docker run ${DOCKER_REPOSITORY}:${TRAVIS_COMMIT}
+   - docker run bravado_django_test_client:${TRAVIS_COMMIT}
