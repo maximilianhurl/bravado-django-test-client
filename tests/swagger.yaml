@@ -40,6 +40,9 @@ definitions:
   CatList:
     type: 'object'
     properties:
+      CAT_HEADER:
+        type: 'string'
+        x-nullable: True
       count:
         type: 'number'
         x-nullable: True
@@ -127,7 +130,7 @@ paths:
       produces:
         - 'application/json'
       responses:
-        201:
+        200:
           description: A cat object
           headers:
             Access-Control-Allow-Headers:
@@ -140,26 +143,6 @@ paths:
             $ref: "#/definitions/CatList"
 
   /cats/{cat_name}/:
-    delete:
-      description: Delete a cat
-      operationId: deleteCat
-      parameters:
-        - $ref: "#/parameters/catName"
-      tags:
-        - cats
-      produces:
-        - 'application/json'
-      responses:
-        204:
-          description: Empty response for successful deletion
-          headers:
-            Access-Control-Allow-Headers:
-              type: 'string'
-            Access-Control-Allow-Methods:
-              type: 'string'
-            Access-Control-Allow-Origin:
-              type: 'string'
-
     put:
       description: Update an existing cat
       operationId: updateCat
