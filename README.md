@@ -1,5 +1,7 @@
 # Bravado Django Test Client
 
+[![Build Status](https://travis-ci.org/maximilianhurl/bravado-django-test-client.svg?branch=master)](https://travis-ci.org/maximilianhurl/bravado-django-test-client)
+
 [Django Test Client](https://docs.djangoproject.com/en/2.1/topics/testing/tools/\#the-test-client) compatible HTTP Client with [Bravado](https://github.com/Yelp/bravado).
 
 This allows your Django API and OpenAPI v2 (Swagger) specification files to be tested against each other in your unit tests. The aim being to quickly highlight any potential discrepancies between the specification and your actual API.
@@ -25,3 +27,5 @@ client = SwaggerClient.from_spec(swagger_file, http_client=bravado_http_client, 
 # now use as you would a normal bravado client
 pet_result = client.pet.getPetById(petId=42).response().result
 ```
+
+See the tests directory for a more complete example.

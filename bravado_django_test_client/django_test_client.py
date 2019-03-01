@@ -36,11 +36,13 @@ class DjangoTestResponseAdapter(IncomingResponse):
         return headers
 
     def json(self, **kwargs):
-        return self.django_response.data
+        if hasattr(self.django_response, 'data'):
+            return self.django_response.data
+        return self.django_response.json()
 
     @property
     def data(self):
-        return self.django_response.data
+        return self.json()
 
 
 class DjangoTestFutureAdapter(FutureAdapter):
@@ -51,13 +53,23 @@ class DjangoTestFutureAdapter(FutureAdapter):
     def result(self, timeout):
         request = self.request
         request_method = getattr(self.client, request["method"].lower())
+        url = request["url"]
+        headers = request["headers"]
 
         # convert data from a string to json
         data = request.get("data", None)
         if data:
             data = json.loads(data)
 
-        response = request_method(request["url"], data, **request["headers"])
+        # handle get params
+        params = request.get('params', {})
+
+        # handle DRF and vanila Django seperately
+        if self.client.__class__.__name__ == 'Client':
+            response = request_method(url, data or params, **headers, content_type="application/json")
+        else:
+            response = request_method(url, data or params, **headers, format='json')
+
         return response
 
 

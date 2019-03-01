@@ -1,0 +1,165 @@
+
+swagger: '2.0'
+info:
+  version: '0.0.1'
+  title: 'Bravado Test API'
+  description: 'Testing API for bravado'
+
+
+definitions:
+
+  GetParamsResponse:
+    type: 'object'
+    additionalProperties: False
+    properties:
+      paramInt:
+        type: 'integer'
+      paramString:
+        type: 'string'
+        x-nullable: True
+
+  Cat:
+    type: 'object'
+    required:
+      - 'name'
+    additionalProperties: False
+    properties:
+      id:
+        type: 'string'
+      name:
+        type: 'string'
+      color:
+        type: 'string'
+      age:
+        type: 'number'
+      friends:
+        type: 'array'
+        items:
+          $ref: "#/definitions/Cat"
+
+  CatList:
+    type: 'object'
+    properties:
+      CAT_HEADER:
+        type: 'string'
+        x-nullable: True
+      count:
+        type: 'number'
+        x-nullable: True
+      results:
+        type: 'array'
+        items:
+          $ref: "#/definitions/Cat"
+
+parameters:
+
+  catName:
+    in: path
+    name: cat_name
+    description: A string cat name
+    required: true
+    type: 'string'
+
+paths:
+
+  /:
+    get:
+      description: Test endpoitn for get params
+      operationId: GetParamsTest
+      tags:
+        - tests
+      parameters:
+        - in: query
+          name: paramInt
+          type: integer
+          required: true
+          description: A numeric param
+        - in: query
+          name: paramString
+          type: string
+          required: false
+          description: A string param
+      produces:
+        - 'application/json'
+      responses:
+        200:
+          description: A fake get response
+          headers:
+            Access-Control-Allow-Headers:
+              type: 'string'
+            Access-Control-Allow-Methods:
+              type: 'string'
+            Access-Control-Allow-Origin:
+              type: 'string'
+          schema:
+            $ref: "#/definitions/GetParamsResponse"
+
+  /cats/:
+    post:
+      description: Create a cat
+      operationId: createCat
+      parameters:
+        - in: body
+          required: true
+          name: cat
+          description: cat to create
+          schema:
+            $ref: "#/definitions/Cat"
+      tags:
+        - cats
+      produces:
+        - 'application/json'
+      responses:
+        201:
+          description: A cat object
+          headers:
+            Access-Control-Allow-Headers:
+              type: 'string'
+            Access-Control-Allow-Methods:
+              type: 'string'
+            Access-Control-Allow-Origin:
+              type: 'string'
+          schema:
+            $ref: "#/definitions/Cat"
+
+    get:
+      description: list cats
+      operationId: listCats
+      tags:
+        - cats
+      produces:
+        - 'application/json'
+      responses:
+        200:
+          description: A cat object
+          headers:
+            Access-Control-Allow-Headers:
+              type: 'string'
+            Access-Control-Allow-Methods:
+              type: 'string'
+            Access-Control-Allow-Origin:
+              type: 'string'
+          schema:
+            $ref: "#/definitions/CatList"
+
+  /cats/{cat_name}/:
+    put:
+      description: Update an existing cat
+      operationId: updateCat
+      parameters:
+        - $ref: "#/parameters/catName"
+        - in: body
+          required: true
+          name: cat
+          description: cat to update
+          schema:
+            $ref: "#/definitions/Cat"
+      tags:
+        - cats
+      produces:
+        - 'application/json'
+      responses:
+        200:
+          description: A cat object
+          schema:
+            $ref: "#/definitions/Cat"

@@ -1,0 +1,11 @@
+FROM python:3.7-slim
+
+WORKDIR /app
+
+COPY bravado_django_test_client ./bravado_django_test_client
+COPY tests ./tests
+COPY requirements-test.txt .
+
+RUN pip install -r requirements-test.txt
+
+CMD ["sh", "-c", "cd tests && pytest --cov bravado_django_test_client --cov-report term"]

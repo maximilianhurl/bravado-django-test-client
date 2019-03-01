@@ -1,0 +1,26 @@
+[run]
+branch = True
+omit =
+    */asgi.py
+    */wsgi.py
+    */migrations/*.py
+    */settings.py
+    */manage.py
+    */blueprints/*.py
+    */*.pyx
+    */*.pxd
+    */*.pyi
+
+[report]
+# Regexes for lines to exclude from consideration
+exclude_lines =
+    pragma: nocover
+    if self\.debug
+    raise AssertionError
+    raise NotImplementedError
+    raise TypeError
+    def __repr__
+    def __str__
+    assert False
+    pass
+fail_under = 100
