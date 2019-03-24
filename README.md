@@ -26,6 +26,8 @@ client = SwaggerClient.from_spec(swagger_file, http_client=bravado_http_client, 
 
 # now use as you would a normal bravado client
 pet_result = client.pet.getPetById(petId=42).response().result
+
+# any request or response that doesnt match your schema will raise an exception
 ```
 
-See the tests directory for a more complete example.
+See the [tests directory](https://github.com/maximilianhurl/bravado-django-test-client/blob/master/tests/tests.py) for a more complete example.
