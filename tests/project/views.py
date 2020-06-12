@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -34,6 +36,11 @@ cat_3 = {
     "friends": [],
 }
 
+dog = {
+    "id": uuid4(),
+    "name": "fido"
+}
+
 
 @api_view(['GET', 'POST'])
 def cats_list(request):
@@ -52,3 +59,9 @@ def cat_update(request, cat_name):
         **request.data,
         "name": cat_name,
     }, status=200)
+
+
+
+@api_view(['GET'])
+def dog_detail(request, dog_name):
+    return Response(dog, status=200)

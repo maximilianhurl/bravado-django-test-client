@@ -120,3 +120,16 @@ def test_cat_invalid_request(swagger_client_drf_client):
 
     with pytest.raises(ValidationError, match="'name' is a required property"):
         swagger_client_drf_client.cats.updateCat(cat_name="minky", cat=cat).response()
+
+
+def test_dog(swagger_client_django_client):
+    response = swagger_client_django_client.dogs.detailDog(dog_name="fido").response()
+    assert response.incoming_response.status_code == 200
+    assert response.result["id"] is not None
+    assert response.result["name"] == "fido"
+
+def test_dog_rest_framework(swagger_client_drf_client):
+    response = swagger_client_drf_client.dogs.detailDog(dog_name="fido").response()
+    assert response.incoming_response.status_code == 200
+    assert response.result["id"] is not None
+    assert response.result["name"] == "fido"
