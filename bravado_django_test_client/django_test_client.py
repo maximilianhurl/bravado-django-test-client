@@ -36,8 +36,6 @@ class DjangoTestResponseAdapter(IncomingResponse):
         return headers
 
     def json(self, **kwargs):
-        if hasattr(self.django_response, 'data'):
-            return self.django_response.data
         return self.django_response.json()
 
     @property

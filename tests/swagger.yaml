@@ -1,7 +1,7 @@
 
 swagger: '2.0'
 info:
-  version: '0.0.1'
+  version: '0.0.2'
   title: 'Bravado Test API'
   description: 'Testing API for bravado'
 
@@ -51,12 +51,30 @@ definitions:
         items:
           $ref: "#/definitions/Cat"
 
+  Dog:
+    type: 'object'
+    required:
+      - 'name'
+    additionalProperties: False
+    properties:
+      id:
+        type: 'string'
+      name:
+        type: 'string'
+
 parameters:
 
   catName:
     in: path
     name: cat_name
     description: A string cat name
+    required: true
+    type: 'string'
+
+  dogName:
+    in: path
+    name: dog_name
+    description: A string dog name
     required: true
     type: 'string'
 
@@ -163,3 +181,26 @@ paths:
           description: A cat object
           schema:
             $ref: "#/definitions/Cat"
+
+  /dog/{dog_name}/:
+    get:
+      description: Get dog
+      operationId: detailDog
+      parameters:
+        - $ref: "#/parameters/dogName"
+      tags:
+        - dogs
+      produces:
+        - 'application/json'
+      responses:
+        200:
+          description: A dog object
+          headers:
+            Access-Control-Allow-Headers:
+              type: 'string'
+            Access-Control-Allow-Methods:
+              type: 'string'
+            Access-Control-Allow-Origin:
+              type: 'string'
+          schema:
+            $ref: "#/definitions/Dog"
