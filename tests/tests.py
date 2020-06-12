@@ -122,8 +122,6 @@ def test_cat_invalid_request(swagger_client_drf_client):
         swagger_client_drf_client.cats.updateCat(cat_name="minky", cat=cat).response()
 
 
-
-
 def test_dog(swagger_client_django_client):
     response = swagger_client_django_client.dogs.detailDog(dog_name="fido").response()
     assert response.incoming_response.status_code == 200
